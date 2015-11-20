@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Functional Programming 101 Part 1</title>
+
+		<meta name="description" content="Functional Programming 101 Part 1">
+		<meta name="author" content="Ziyi">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section data-markdown="slides/intro.md"></section>
+				<section data-markdown="slides/agenda.md"></section>
+				<section>
+					<section data-markdown="slides/exampleOOPvsFP.md"><pre><code></code></pre></section>
+					<section data-markdown="slides/exampleOOP.md"></section>
+					<section data-markdown="slides/exampleFP.md"></section>
+				</section>
+				<section></section>
+				<section>
+					<section data-background="images/firstclass.png"
+									 data-background-size="160vh"><h1 class="fragment fade-in">First Class Functions</h1></section>
+					<section data-markdown="slides/firstclassfunctions.md"></section>
+					<section>
+						<h3>JavaScript 101</h3>
+						<pre><code>
+var hi = function(name){
+  return "Hi " + name;
+};
+
+var greeting = function(name) {
+  return hi(name);
+};
+						</code></pre>
+						<pre class="fragment"><code>
+hi;
+// function(name){
+//  return "Hi " + name
+// }
+
+hi("jonas");
+// "Hi jonas"
+						</code>
+						</pre>
+
+					</section>
+					<section>
+						<h3>Controller</h3>
+						<pre><code>
+var BlogController = (function() {
+  var index = function(posts) {
+    return Views.index(posts);
+  };
+
+  var show = function(post) {
+    return Views.show(post);
+  };
+
+  var create = function(attrs) {
+    return Db.create(attrs);
+  };
+
+  var update = function(post, attrs) {
+    return Db.update(post, attrs);
+  };
+
+  var destroy = function(post) {
+    return Db.destroy(post);
+  };
+
+  return {
+    index: index, show: show, create: create, update: update, destroy: destroy
+  };
+})();
+						</code></pre>
+					</section>
+					<section>
+						<p>This ridiculous controller is 99% fluff. We could either rewrite it as:</p>
+						<pre><code>
+var BlogController = {
+  index: Views.index,
+  show: Views.show,
+  create: Db.create,
+  update: Db.update,
+  destroy: Db.destroy
+};
+						</code></pre>
+						<p>...or scrap it altogether as it does nothing other than bundle our Views and Db together.</p>
+					</section>
+					<section>
+						<pre><code>
+httpGet('/post/2', function(json){
+  return renderPost(json);
+});
+						</code></pre>
+						<pre class="fragment"><code>
+// go back to every httpGet call in the application and explicitly pass err
+// along.
+httpGet('/post/2', function(json, err){
+  return renderPost(json, err);
+});
+						</code></pre>
+						<pre class="fragment"><code>
+// renderPost is called from within httpGet with however many arguments it wants
+httpGet('/post/2', renderPost);
+						</code></pre>
+					</section>
+
+				</section>
+
+				<section>
+					<section data-markdown="slides/purefunctions.md"></section>
+					<section data-markdown="slides/validfunction.md"></section>
+					<section data-markdown="slides/purefunctionsexample.md"></section>
+					<section data-markdown="slides/purefunctionsexample2.md"></section>
+					<section data-markdown="slides/purefunctionsexample3.md"></section>
+					<section data-markdown="slides/nosideeffect.md"></section>
+					<section data-markdown="slides/nosideeffect2.md"></section>
+					<section data-markdown="slides/whyChasingPureFunction.md"></section>
+					<section data-markdown="slides/cacheable.md"></section>
+					<section data-markdown="slides/cacheable2.md"></section>
+					<section data-markdown="slides/cacheable3.md"></section>
+					<section data-markdown="slides/portable.md"></section>
+					<section data-markdown="slides/testable.md"></section>
+					<section data-markdown="slides/parallel.md"></section>
+
+				</section>
+
+				<section>
+					<section data-markdown="slides/lego.md"></section>
+					<section data-markdown="slides/curry1.md"></section>
+					<section data-markdown="slides/curry2.md"></section>
+					<section data-markdown="slides/curry3.md"></section>
+					<section data-markdown="slides/compose1.md"></section>
+					<section data-markdown="slides/compose2.md"></section>
+					<section data-markdown="slides/compose3.md"></section>
+					<section data-markdown="slides/compose4.md"></section>
+					<section data-markdown="slides/compose5.md"></section>
+					<section data-markdown="slides/compose6.md"></section>
+					<section data-markdown="slides/compose7.md"></section>
+
+				</section>
+
+				<section>
+					<section data-markdown="slides/declarativeVsImperative.md"></section>
+					<section data-markdown="slides/declarativeVsImperativeExample.md"></section>
+				</section>
+				<section data-markdown="slides/OOPvsFPrevisited.md"></section>
+				<section data-markdown="slides/realworldexample.md"></section>
+				<section data-markdown="slides/acknowledgements.md"></section>
+				<section data-markdown="slides/whatsmore.md"></section>
+				<section data-markdown="slides/outro.md"
+						 data-background="images/functional-way-is-right-way.jpg"
+						 data-background-size="70vh"
+						></section>
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
